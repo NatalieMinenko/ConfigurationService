@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using ConfigurationService.Persistence;
 
 public class Program
 {
@@ -7,10 +6,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddDbContext<SettingsContext>(opt => opt.UseInMemoryDatabase("SettingsList"));
-        builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+        //builder.Services.AddDbContext<SettingsContext>(opt => opt.UseInMemoryDatabase("SettingsList"));
+        //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-        builder.Services.AddScoped<ISettingsRepository, SettingsRepository>();
+        //builder.Services.AddScoped<ISettingsRepository, SettingsRepository>();
 
         var app = builder.Build();
 
