@@ -1,6 +1,18 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Microsoft.EntityFrameworkCore;
 
-app.MapGet("/", () => "Hello World!");
+public class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-app.Run();
+        //builder.Services.AddDbContext<SettingsContext>(opt => opt.UseInMemoryDatabase("SettingsList"));
+        //builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+        //builder.Services.AddScoped<ISettingsRepository, SettingsRepository>();
+
+        var app = builder.Build();
+
+        app.Run();
+    }
+}
