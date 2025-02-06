@@ -1,11 +1,6 @@
 ﻿using ConfigurationService.Persistence.DTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConfigurationService.Persistence.Repository.Interfaces;
+namespace ConfigurationService.Persistence.Interfaces;
 
 public interface ISettingsRepository
 {

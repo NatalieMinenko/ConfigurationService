@@ -1,4 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+
+using ConfigurationService.Persistence.Interfaces;
+using ConfigurationService.Persistence.Repository;
 
 public class Program
 {

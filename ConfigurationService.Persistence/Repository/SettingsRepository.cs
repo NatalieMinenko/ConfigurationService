@@ -1,11 +1,7 @@
 ﻿using ConfigurationService.Persistence.DTO;
-using ConfigurationService.Persistence.Repository.Interfaces;
+using ConfigurationService.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ConfigurationService.Persistence.Repository;
 
