@@ -8,4 +8,5 @@ public interface ISettingsRepository
     Task AddSettingAsync(Settings setting);
     Task UpdateSettingAsync(Settings setting, Settings newSetting);
     Task DeleteSettingAsync(int id);
+    Task<Settings> GetSettingByIdAsync(int id);
 }

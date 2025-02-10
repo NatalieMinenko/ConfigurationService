@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConfigurationService.Persistence;
 
-public class SettingsContext : DbContext
+public class SettingsContext(DbContextOptions<SettingsContext> options) : DbContext (options)
 {
-    public SettingsContext(DbContextOptions<SettingsContext> options) : base(options)
-    {
-    }
-
     public DbSet<Settings> Settings { get; set; }
 }
 
