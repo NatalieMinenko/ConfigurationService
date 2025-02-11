@@ -41,4 +41,8 @@ public class SettingsRepository : ISettingsRepository
             await _context.SaveChangesAsync();
         }
     }
+    public async Task<Settings> GetSettingByIdAsync(int id)
+    {
+        return await _context.Settings.FindAsync(id);
+    }
 }
