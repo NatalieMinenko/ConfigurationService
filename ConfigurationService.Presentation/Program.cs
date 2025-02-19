@@ -3,6 +3,9 @@ using ConfigurationService.Persistence.Repository;
 using ConfigurationService.Persistence.Interfaces;
 using ConfigurationService.Persistence;
 using ConfigurationService.Persistence.DTO;
+using ConfigurationService.Presentation.Models;
+using ConfigurationService.Presentation.Models.Requests;
+using Microsoft.AspNetCore.Mvc;
 
 
 public class Program
@@ -11,6 +14,13 @@ public class Program
 
     {
         var builder = WebApplication.CreateBuilder(args);
+        builder.Configuration
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+            .AddJsonFile("appsettings.secrets.json", optional: true, reloadOnChange: true)
+            .AddCommandLine(args)
+            .AddEnvironmentVariables()
+            .Build();
 
         builder.Services.AddDbContext<SettingsContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("ConfigurationServiceDb")));
@@ -26,19 +36,37 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/settings/{service}", async (ISettingsRepository repository, string service) =>
+        app.MapGet("/settings/service/{service}", async ([FromQuery] ServiceTypeDto service, ISettingsRepository repository) =>
         {
             var settings = await repository.GetSettingsByServiceAsync(service);
-            return settings.Any() ? Results.Ok(settings) : Results.NotFound();
+            if (settings == null)
+            {
+                return Results.NotFound();
+            }
+            return Results.Ok(settings);
         });
 
-        app.MapPost("/settings", async (ISettingsRepository repository, Settings setting) =>
+        app.MapPost("/settings", async (ISettingsRepository repository, SettingCreateRequest request) =>
         {
+            var existingSetting = await repository.GetSettingByNameAsync(request.Name);
+            if (existingSetting != null)
+            {
+                return Results.Conflict("Setting with the name already exists for the service");
+            }
+
+            var setting = new SettingsDto
+            {
+                Name = request.Name,
+                Value = request.Value,
+                Service = (ServiceTypeDto)request.Service
+            };
+
             await repository.AddSettingAsync(setting);
-            return Results.Created($"/settings/{setting.Service}", setting);
+            return Results.Created($"/settings/{setting.Id}", setting);
+
         });
 
-        app.MapPut("/settings/{id}", async (ISettingsRepository repository, int id, Settings newSetting) =>
+        app.MapPatch("/settings/{id}", async (ISettingsRepository repository, int id, SettingUpdateRequest request) =>
         {
             var setting = await repository.GetSettingByIdAsync(id);
             if (setting == null)
@@ -46,7 +74,9 @@ public class Program
                 return Results.NotFound();
             }
 
-            await repository.UpdateSettingAsync(setting, newSetting);
+            setting.Value = request.Value;
+            await repository.UpdateSettingAsync(setting);
+
             return Results.NoContent();
         });
 

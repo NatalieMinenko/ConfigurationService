@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ConfigurationService.Persistence.Migrations
 {
     [DbContext(typeof(SettingsContext))]
-    [Migration("20250209185818_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250218193524_SettingsMigration")]
+    partial class SettingsMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace ConfigurationService.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ConfigurationService.Persistence.DTO.Settings", b =>
+            modelBuilder.Entity("ConfigurationService.Persistence.DTO.SettingsDto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,17 +34,21 @@ namespace ConfigurationService.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
-                    b.Property<string>("Service")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Service")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Id")
+                        .IsUnique();
 
                     b.ToTable("Settings");
                 });

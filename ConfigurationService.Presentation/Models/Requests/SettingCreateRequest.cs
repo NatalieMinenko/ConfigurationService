@@ -1,8 +1,8 @@
 ﻿namespace ConfigurationService.Presentation.Models.Requests;
 
-public class GetSettingsForTheService
+public class SettingCreateRequest
 {
     public string Name { get; set; }
     public string Value { get; set; }
-    public string Service { get; set; }
+    public int Service { get; set; }
 }
