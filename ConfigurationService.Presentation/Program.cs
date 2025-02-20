@@ -7,7 +7,6 @@ using ConfigurationService.Presentation.Models;
 using ConfigurationService.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
 
-
 public class Program
 {
     private static void Main(string[] args)
@@ -25,6 +24,9 @@ public class Program
         builder.Services.AddDbContext<SettingsContext>(options =>
             options.UseNpgsql(builder.Configuration.GetConnectionString("ConfigurationServiceDb")));
 
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
         builder.Services.AddScoped<ISettingsRepository, SettingsRepository>();
 
         var app = builder.Build();
@@ -32,11 +34,17 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(options => // UseSwaggerUI is called only in Development.
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                options.RoutePrefix = string.Empty;
+            });
         }
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/settings/service/{service}", async ([FromQuery] ServiceTypeDto service, ISettingsRepository repository) =>
+        app.MapGet("/settings/service/{service}", async ([FromRoute] ServiceTypeDto service, ISettingsRepository repository) =>
         {
             var settings = await repository.GetSettingsByServiceAsync(service);
             if (settings == null)
