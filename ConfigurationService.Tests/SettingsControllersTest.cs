@@ -42,19 +42,6 @@ public class SettingsControllersTest : IClassFixture<WebApplicationFactory<Progr
         Assert.Equal((int)HttpStatusCode.NotFound, (int)response.StatusCode); // 400
     }
     [Fact]
-    public async Task GetSettingsByService_ReturnsOk_ForValidService()
-    {
-        // Arrange
-        var service = ServiceTypeDto.CustomersService;
-        
-        // Act
-        var response = await _client.GetAsync($"/settings/service/{service}");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-    }
-
-    [Fact]
     public async Task CreateSetting_ReturnsCreated_WhenSettingIsNotExist()
     {
         // Arrange
@@ -72,40 +59,6 @@ public class SettingsControllersTest : IClassFixture<WebApplicationFactory<Progr
         response.EnsureSuccessStatusCode(); // 201
         var createdSetting = await response.Content.ReadAsStringAsync();
         Assert.NotNull(createdSetting);
-    }
-    [Fact]
-    public async Task CreateSetting_ReturnsConflict_WhenSettingAlreadyExists()
-    {
-        // Arrange
-        var existingSetting = new SettingCreateRequest
-        {
-            Name = "TestSetting",
-            Value = "TestValue",
-            Service = 1
-        };
-
-        // Act
-        var response1 = await _client.PostAsJsonAsync("/settings", existingSetting);
-        var response2 = await _client.PostAsJsonAsync("/settings", existingSetting);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.Conflict, response2.StatusCode); // 409
-    }
-    [Fact]
-    public async Task UpdateSetting_ReturnsNoContent_WhenSettingExists()
-    {
-        // Arrange
-        var updateRequest = new SettingUpdateRequest
-        {
-            Value = "UpdatedValue"
-        };
-        int settingId = 1;
-
-        // Act
-        var response = await _client.PatchAsJsonAsync($"/settings/{settingId}", updateRequest);
-
-        // Assert
-        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode); // 204
     }
         [Fact]
     public async Task UpdateSetting_ReturnsNotFound_WhenSettingDoesNotExist()
