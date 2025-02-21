@@ -3,15 +3,14 @@ using ConfigurationService.Persistence.Repository;
 using ConfigurationService.Persistence.Interfaces;
 using ConfigurationService.Persistence;
 using ConfigurationService.Persistence.DTO;
-using ConfigurationService.Presentation.Models;
 using ConfigurationService.Presentation.Models.Requests;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
-
-public class Program
+namespace ConfigurationService.Presentation;
+public  class Program
 {
-    private static void Main(string[] args)
-
+    public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Configuration
@@ -36,13 +35,18 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/settings/service/{service}", async ([FromQuery] ServiceTypeDto service, ISettingsRepository repository) =>
+        app.MapGet(
+        "/settings/", 
+            async (ServiceTypeDto service,
+            ISettingsRepository repository) =>
         {
-            var settings = await repository.GetSettingsByServiceAsync(service);
-            if (settings == null)
-            {
-                return Results.NotFound();
-            }
+            //ServiceTypeDto service = request.Query["service"];
+            ServiceTypeDto service1 = JsonSerializer.Serialize(service);
+            var settings = await repository.GetSettingsByServiceAsync(service1);
+            //if (settings == null)
+            //{
+            //    return Results.NotFound();
+            //}
             return Results.Ok(settings);
         });
 
@@ -93,5 +97,8 @@ public class Program
         });
 
         app.Run();
-    }
+    } 
 }
+
+//public partial class Program { }
+

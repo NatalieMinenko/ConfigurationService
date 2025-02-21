@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ConfigurationService.Persistence\ConfigurationService.Persistence.csproj" />
+    <ProjectReference Include="..\ConfigurationService.Presentation\ConfigurationService.Presentation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
