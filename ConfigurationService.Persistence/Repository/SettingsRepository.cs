@@ -2,7 +2,6 @@
 using ConfigurationService.Persistence.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace ConfigurationService.Persistence.Repository;
 
 public class SettingsRepository : ISettingsRepository
@@ -14,9 +13,19 @@ public class SettingsRepository : ISettingsRepository
         _context = context;
     }
 
-    public async Task<List<Settings>> GetSettingsByServiceAsync(string service)
+    public async Task<Settings> GetSettingsByServiceAsync(ServiceName service)
     {
-        return await _context.Settings.Where(s => s.Service == service).ToListAsync();
+        return await _context.Settings.FirstOrDefaultAsync(s => s.Service == service);
+    }
+
+    public async Task<Settings> GetSettingByIdAsync(int id)
+    {
+        return await _context.Settings.FindAsync(id);
+    }
+
+    public async Task<Settings> GetSettingByNameAndServiceNameAsync(string name, ServiceName service)
+    {
+        return await _context.Settings.FirstOrDefaultAsync(s => s.Name == name && s.Service == service);
     }
 
     public async Task AddSettingAsync(Settings setting)
@@ -24,11 +33,10 @@ public class SettingsRepository : ISettingsRepository
         _context.Settings.Add(setting);
         await _context.SaveChangesAsync();
     }
-    public async Task UpdateSettingAsync(Settings setting, Settings newSetting)
+
+    public async Task UpdateSettingAsync(Settings setting)
     {
-        setting.Name = newSetting.Name;
-        setting.Value = newSetting.Value;
-        setting.Service = newSetting.Service;
+        _context.Settings.Update(setting);
         await _context.SaveChangesAsync();
     }
 

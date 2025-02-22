@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationService.Presentation", "ConfigurationService.Presentation\ConfigurationService.Presentation.csproj", "{5CA21256-5286-4E7A-B9FB-F0969236E2BE}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationService.Presen
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationService.Persistence", "ConfigurationService.Persistence\ConfigurationService.Persistence.csproj", "{03DBE124-3830-41FA-88C4-E4AF03749C3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{55CCE790-3DF0-472C-9EE2-6DC3A61B6707}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigurationService.Tests", "ConfigurationService.Tests\ConfigurationService.Tests.csproj", "{417C0649-4DD0-424C-8D3C-A14F6F13715E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,8 +28,15 @@ Global
 		{03DBE124-3830-41FA-88C4-E4AF03749C3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03DBE124-3830-41FA-88C4-E4AF03749C3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03DBE124-3830-41FA-88C4-E4AF03749C3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{417C0649-4DD0-424C-8D3C-A14F6F13715E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{417C0649-4DD0-424C-8D3C-A14F6F13715E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{417C0649-4DD0-424C-8D3C-A14F6F13715E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{417C0649-4DD0-424C-8D3C-A14F6F13715E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{417C0649-4DD0-424C-8D3C-A14F6F13715E} = {55CCE790-3DF0-472C-9EE2-6DC3A61B6707}
 	EndGlobalSection
 EndGlobal
