@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using ConfigurationService.Presentation;
 using System.Net;
+using ConfigurationService.Persistence.Repository;
 
 namespace ConfigurationService.Tests
 {
@@ -22,28 +23,28 @@ namespace ConfigurationService.Tests
         public async Task TestRootEndpoint()
         {
             //
-            var setting = new SettingsDto() {
+            var setting = new SettingsDto()
+            {
                 Id = 1,
                 Name = "name",
                 Value = "value",
                 Service = ServiceTypeDto.CustomersService
             };
-            var service = ServiceTypeDto.CustomersService;
-            var settingAsString = JsonSerializer.Serialize(setting);
-
             await using var application = new WebApplicationFactory<Program>()
                .WithWebHostBuilder(builder => builder
                .ConfigureServices(services =>
                {
-                   services.AddSingleton<ISettingsRepository, FakeSettingsRepository>();            
+                   services.AddScoped<ISettingsRepository,FakeSettingsRepository>();            
                }));
             using var client = application.CreateClient();
             //act
-            var response = await client.GetAsync($"/settings/?service=ServiceTypeDto.CustomersService");
-            var t = response;
+            var response = await client.GetAsync($"/settings/?service=0");
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<SettingsDto>(
+                content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             //assert
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            //Assert.Equivalent(settingAsString, response);
+            Assert.Equivalent(setting, result);
         }
     }
 }

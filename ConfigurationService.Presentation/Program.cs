@@ -6,6 +6,7 @@ using ConfigurationService.Persistence.DTO;
 using ConfigurationService.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ConfigurationService.Presentation;
 public  class Program
@@ -35,18 +36,16 @@ public  class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet(
-        "/settings/", 
-            async (ServiceTypeDto service,
-            ISettingsRepository repository) =>
+        app.MapGet("/settings", async (
+            [FromQuery] ServiceTypeDto service,
+            ISettingsRepository repository
+            ) =>
         {
-            //ServiceTypeDto service = request.Query["service"];
-            ServiceTypeDto service1 = JsonSerializer.Serialize(service);
-            var settings = await repository.GetSettingsByServiceAsync(service1);
-            //if (settings == null)
-            //{
-            //    return Results.NotFound();
-            //}
+            var settings = await repository.GetSettingsByServiceAsync(service);
+            if (settings == null)
+            {
+                return Results.NotFound();
+            }
             return Results.Ok(settings);
         });
 
