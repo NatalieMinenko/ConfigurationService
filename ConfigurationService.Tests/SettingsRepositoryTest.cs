@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using ConfigurationService.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 using FluentAssertions;
-using ConfigurationService.Presentation.Models;
+
 namespace ConfigurationService.Tests;
 
 public class SettingsRepositoryTest
@@ -32,12 +32,12 @@ public class SettingsRepositoryTest
     {
         // Arrange
         var settingId = 2;
-        var expectedSetting = new SettingsDto
+        var expectedSetting = new Settings
         {
             Id = settingId,
             Name = "TestSetting",
             Value = "TestValue",
-            Service = ServiceTypeDto.CustomersService
+            Service = ServiceName.CustomersService
         };
 
         await _context.Settings.AddAsync(expectedSetting);
@@ -68,18 +68,18 @@ public class SettingsRepositoryTest
     public async Task GetSettingsByServiceAsync_ReturnsSetting_WhenExists()
     {
         // Arrange
-        var expectedSetting = new SettingsDto
+        var expectedSetting = new Settings
         {
             Name = "TestSetting",
             Value = "TestValue",
-            Service = ServiceTypeDto.CustomersService
+            Service = ServiceName.CustomersService
         };
 
         await _context.Settings.AddAsync(expectedSetting);
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _settingsRepository.GetSettingsByServiceAsync(ServiceTypeDto.CustomersService);
+        var result = await _settingsRepository.GetSettingsByServiceAsync(ServiceName.CustomersService);
 
         // Assert
         Assert.NotNull(result);
@@ -92,7 +92,7 @@ public class SettingsRepositoryTest
     public async Task GetSettingsByServiceAsync_ReturnsNull_WhenNotExists()
     {
         // Act
-        var result = await _settingsRepository.GetSettingsByServiceAsync(ServiceTypeDto.Unknown);
+        var result = await _settingsRepository.GetSettingsByServiceAsync(ServiceName.Unknown);
 
         // Assert
         Assert.Null(result);
@@ -101,33 +101,29 @@ public class SettingsRepositoryTest
     public async Task GetSettingByNameAsync_ReturnsSetting_WhenExists()
     {
         // Arrange
-        var setting = new SettingsDto
+        var setting = new Settings
         {
             Id = 17,
             Name = "TestSetting",
             Value = "TestValue",
-            Service = ServiceTypeDto.CustomersService
+            Service = ServiceName.CustomersService
         };
 
         await _context.Settings.AddAsync(setting);
         await _context.SaveChangesAsync();
 
         // Act
-        var result = await _settingsRepository.GetSettingByNameAsync("TestSetting");
+        var result = await _settingsRepository.GetSettingByNameAndServiceNameAsync("TestSetting", ServiceName.CustomersService);
 
         // Assert
-        Assert.NotNull(result);
-        Assert.Equal(setting.Id, result.Id);
-        Assert.Equal(setting.Name, result.Name);
-        Assert.Equal(setting.Value, result.Value);
-        Assert.Equal(setting.Service, result.Service);
+        Assert.Equivalent(setting, result);
     }
 
     [Fact]
     public async Task GetSettingByNameAsync_ReturnsNull_WhenDoesNotExist()
     {
         // Act
-        var result = await _settingsRepository.GetSettingByNameAsync("NonExistentSetting");
+        var result = await _settingsRepository.GetSettingByNameAndServiceNameAsync("NonExistentSetting", ServiceName.CustomersService);
 
         // Assert
         Assert.Null(result);
@@ -137,12 +133,12 @@ public class SettingsRepositoryTest
     public async Task AddSettingAsync_AddsSetting()
     {
         // Arrange
-        var setting = new SettingsDto
+        var setting = new Settings
         {
             Id = 15,
             Name = "NewSetting",
             Value = "NewValue",
-            Service = ServiceTypeDto.TransactionsStore
+            Service = ServiceName.TransactionsStore
         };
 
         // Act
@@ -160,12 +156,12 @@ public class SettingsRepositoryTest
     public async Task UpdateSettingAsync_UpdatesSetting_WhenExists()
     {
         // Arrange
-        var setting = new SettingsDto
+        var setting = new Settings
         {
             Id = 3,
             Name = "UpdateSetting",
             Value = "OldValue",
-            Service = ServiceTypeDto.RatesProvider
+            Service = ServiceName.RatesProvider
         };
 
         await _context.Settings.AddAsync(setting);
@@ -186,12 +182,12 @@ public class SettingsRepositoryTest
     public async Task DeleteSettingAsync_RemovesSetting_WhenExists()
     {
         // Arrange
-        var setting = new SettingsDto
+        var setting = new Settings
         {
             Id = 2,
             Name = "DeleteSetting",
             Value = "ValueToDelete",
-            Service = ServiceTypeDto.ReportingService
+            Service = ServiceName.ReportingService
         };
 
         await _context.Settings.AddAsync(setting);

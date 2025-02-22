@@ -13,28 +13,28 @@ public class SettingsRepository : ISettingsRepository
         _context = context;
     }
 
-    public async Task<SettingsDto> GetSettingsByServiceAsync(ServiceTypeDto service)
+    public async Task<Settings> GetSettingsByServiceAsync(ServiceName service)
     {
         return await _context.Settings.FirstOrDefaultAsync(s => s.Service == service);
     }
 
-    public async Task<SettingsDto> GetSettingByIdAsync(int id)
+    public async Task<Settings> GetSettingByIdAsync(int id)
     {
         return await _context.Settings.FindAsync(id);
     }
 
-    public async Task<SettingsDto> GetSettingByNameAsync(string name)
+    public async Task<Settings> GetSettingByNameAndServiceNameAsync(string name, ServiceName service)
     {
-        return await _context.Settings.FirstOrDefaultAsync(s => s.Name == name);
+        return await _context.Settings.FirstOrDefaultAsync(s => s.Name == name && s.Service == service);
     }
 
-    public async Task AddSettingAsync(SettingsDto setting)
+    public async Task AddSettingAsync(Settings setting)
     {
         _context.Settings.Add(setting);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateSettingAsync(SettingsDto setting)
+    public async Task UpdateSettingAsync(Settings setting)
     {
         _context.Settings.Update(setting);
         await _context.SaveChangesAsync();

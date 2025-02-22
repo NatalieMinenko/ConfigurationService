@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System.Net;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace ConfigurationService.Tests;
 
@@ -29,17 +30,17 @@ public class SettingsControllersTest : IClassFixture<WebApplicationFactory<Progr
         _client = _factory.CreateClient();
     }
     [Fact]
-    public async Task GetSettingsByService_ReturnsNotFound_WhenServiceIsUnknown()
+    public async Task GetSettingsByService_ReturnsNotFound_WhenServiceExist()
     {
         // Arrange
         var client = _factory.CreateClient();
-        var service = ServiceTypeDto.Unknown;
+        var service = ServiceName.Unknown;
 
         // Act
-        var response = await _client.GetAsync($"/settings/service/{service}");
-
+        var response = await _client.GetAsync($"/settings/?service=0");
+        
         // Assert
-        Assert.Equal((int)HttpStatusCode.NotFound, (int)response.StatusCode); // 400
+        Assert.Equal((int)HttpStatusCode.NotFound, (int)response.StatusCode); // 404
     }
     [Fact]
     public async Task CreateSetting_ReturnsCreated_WhenSettingIsNotExist()
@@ -49,7 +50,7 @@ public class SettingsControllersTest : IClassFixture<WebApplicationFactory<Progr
         {
             Name = "TestSetting",
             Value = "TestValue",
-            Service = 1
+            Service = ServiceName.CustomersService
         };
 
         // Act
@@ -88,7 +89,6 @@ public class SettingsControllersTest : IClassFixture<WebApplicationFactory<Progr
         // Assert
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode); // 204
     }
-
     [Fact]
     public async Task DeleteSetting_ReturnsNotFound_WhenSettingDoesNotExist()
     {

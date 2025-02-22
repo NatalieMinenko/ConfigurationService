@@ -6,21 +6,21 @@ namespace ConfigurationService.Persistence;
 
 public class SettingsContext(DbContextOptions<SettingsContext> options) : DbContext (options)
 {
-    public DbSet<SettingsDto> Settings { get; set; }
+    public DbSet<Settings> Settings { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<SettingsDto>()
+        modelBuilder.Entity<Settings>()
             .HasIndex(s => s.Id)
             .IsUnique();
-        modelBuilder.Entity<SettingsDto>()
+        modelBuilder.Entity<Settings>()
             .Property(s => s.Name)
             .IsRequired()
             .HasMaxLength(200);
-        modelBuilder.Entity<SettingsDto>()
+        modelBuilder.Entity<Settings>()
             .Property(s => s.Value)
             .IsRequired()
             .HasMaxLength(200);
-        modelBuilder.Entity<SettingsDto>()
+        modelBuilder.Entity<Settings>()
             .Property(s => s.Service)
             .IsRequired();
     }

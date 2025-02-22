@@ -4,10 +4,10 @@ namespace ConfigurationService.Persistence.Interfaces;
 
 public interface ISettingsRepository
 {
-    Task<SettingsDto> GetSettingsByServiceAsync(ServiceTypeDto service);
-    Task AddSettingAsync(SettingsDto setting);
-    Task UpdateSettingAsync(SettingsDto setting);
+    Task<Settings> GetSettingsByServiceAsync(ServiceName service);
+    Task AddSettingAsync(Settings setting);
+    Task UpdateSettingAsync(Settings setting);
     Task DeleteSettingAsync(int id);
-    Task<SettingsDto> GetSettingByIdAsync(int id);
-    Task<SettingsDto> GetSettingByNameAsync(string name);
+    Task<Settings> GetSettingByIdAsync(int id);
+    Task<Settings> GetSettingByNameAndServiceNameAsync(string name, ServiceName service);
 }

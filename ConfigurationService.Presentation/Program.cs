@@ -44,7 +44,7 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.MapGet("/settings/service/{service}", async ([FromRoute] ServiceTypeDto service, ISettingsRepository repository) =>
+        app.MapGet("/settings/", async ([FromQuery] ServiceName service, ISettingsRepository repository) =>
         {
             var settings = await repository.GetSettingsByServiceAsync(service);
             if (settings == null)
@@ -54,19 +54,19 @@ public class Program
             return Results.Ok(settings);
         });
 
-        app.MapPost("/settings", async (ISettingsRepository repository, SettingCreateRequest request) =>
+        app.MapPost("/settings/", async (ISettingsRepository repository, SettingCreateRequest request) =>
         {
-            var existingSetting = await repository.GetSettingByNameAsync(request.Name);
+            var existingSetting = await repository.GetSettingByNameAndServiceNameAsync(request.Name, request.Service);
             if (existingSetting != null)
             {
                 return Results.Conflict("Setting with the name already exists for the service");
             }
 
-            var setting = new SettingsDto
+            var setting = new Settings()
             {
                 Name = request.Name,
                 Value = request.Value,
-                Service = (ServiceTypeDto)request.Service
+                Service = (ServiceName)request.Service
             };
 
             await repository.AddSettingAsync(setting);
