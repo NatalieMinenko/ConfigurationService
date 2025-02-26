@@ -6,6 +6,9 @@ using ConfigurationService.Persistence.DTO;
 using ConfigurationService.Presentation.Models;
 using ConfigurationService.Presentation.Models.Requests;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Configuration;
+using Microsoft.Extensions.Logging.EventLog;
+using Serilog;
 
 public class Program
 {
@@ -13,6 +16,10 @@ public class Program
 
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Host.UseSerilog((context, loggerConfiguration) =>
+            loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+
         builder.Configuration
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
             .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
