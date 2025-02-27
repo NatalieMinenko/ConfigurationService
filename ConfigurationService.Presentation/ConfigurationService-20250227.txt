@@ -1,0 +1,28 @@
+[27-02-2025 18:38:29.795 Microsoft.Hosting.Lifetime INF] #: Now listening on: "https://localhost:7220"
+[27-02-2025 18:38:29.829 Microsoft.Hosting.Lifetime INF] #: Now listening on: "http://localhost:5065"
+[27-02-2025 18:38:29.836 Microsoft.AspNetCore.Mvc.Infrastructure.DefaultActionDescriptorCollectionProvider INF] #: No action descriptors found. This may indicate an incorrectly configured application or missing application parts. To learn more, visit https://aka.ms/aspnet/mvc/app-parts
+[27-02-2025 18:38:29.960 Microsoft.Hosting.Lifetime INF] #: Application started. Press Ctrl+C to shut down.
+[27-02-2025 18:38:29.962 Microsoft.Hosting.Lifetime INF] #: Hosting environment: "Development"
+[27-02-2025 18:38:29.963 Microsoft.Hosting.Lifetime INF] #: Content root path: "C:\cod\ConfigurationService\ConfigurationService.Presentation"
+[27-02-2025 18:38:30.527 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/index.html""" - null null
+[27-02-2025 18:38:30.745 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/index.html""" - 200 null "text/html;charset=utf-8" 219.8084ms
+[27-02-2025 18:38:30.752 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/swagger-ui.css""" - null null
+[27-02-2025 18:38:30.752 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/index.css""" - null null
+[27-02-2025 18:38:30.752 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/swagger-ui-bundle.js""" - null null
+[27-02-2025 18:38:30.752 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/_framework/aspnetcore-browser-refresh.js""" - null null
+[27-02-2025 18:38:30.753 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/swagger-ui-standalone-preset.js""" - null null
+[27-02-2025 18:38:30.753 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/index.js""" - null null
+[27-02-2025 18:38:30.758 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/_vs/browserLink""" - null null
+[27-02-2025 18:38:30.777 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware INF] #: The file "/swagger-ui.css" was not modified
+[27-02-2025 18:38:30.777 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware INF] #: The file "/index.css" was not modified
+[27-02-2025 18:38:30.777 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware INF] #: The file "/swagger-ui-bundle.js" was not modified
+[27-02-2025 18:38:30.784 Microsoft.AspNetCore.StaticFiles.StaticFileMiddleware INF] #: The file "/swagger-ui-standalone-preset.js" was not modified
+[27-02-2025 18:38:30.787 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/_framework/aspnetcore-browser-refresh.js""" - 200 13818 "application/javascript; charset=utf-8" 34.2018ms
+[27-02-2025 18:38:30.788 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/index.js""" - 200 null "application/javascript;charset=utf-8" 35.8711ms
+[27-02-2025 18:38:30.793 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/swagger-ui.css""" - 304 null "text/css" 41.1112ms
+[27-02-2025 18:38:30.794 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/index.css""" - 304 null "text/css" 41.9492ms
+[27-02-2025 18:38:30.796 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/swagger-ui-bundle.js""" - 304 null "text/javascript" 43.9335ms
+[27-02-2025 18:38:30.798 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/swagger-ui-standalone-preset.js""" - 304 null "text/javascript" 45.6898ms
+[27-02-2025 18:38:30.842 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/_vs/browserLink""" - 200 null "text/javascript; charset=UTF-8" 83.6862ms
+[27-02-2025 18:38:30.963 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request starting "HTTP/2" "GET" "https"://"localhost:7220""""/swagger/v1/swagger.json""" - null null
+[27-02-2025 18:38:30.973 Microsoft.AspNetCore.Hosting.Diagnostics INF] #: Request finished "HTTP/2" "GET" "https"://"localhost:7220""""/swagger/v1/swagger.json""" - 200 null "application/json;charset=utf-8" 10.8706ms

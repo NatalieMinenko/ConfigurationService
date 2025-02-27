@@ -1,14 +1,9 @@
 ﻿using ConfigurationService.Persistence.DTO;
 using ConfigurationService.Persistence;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ConfigurationService.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
-using FluentAssertions;
+using Microsoft.Extensions.Logging;
 
 namespace ConfigurationService.Tests;
 
@@ -16,15 +11,16 @@ public class SettingsRepositoryTest
 {
     private readonly SettingsContext _context;
     private readonly SettingsRepository _settingsRepository;
+    private readonly Mock<ILogger<SettingsRepository>> _settingsRepositoryLoggerMock;
 
     public SettingsRepositoryTest()
     {
         var options = new DbContextOptionsBuilder<SettingsContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")
             .Options;
-
+        _settingsRepositoryLoggerMock = new();
         _context = new SettingsContext(options);
-        _settingsRepository = new SettingsRepository(_context);
+        _settingsRepository = new SettingsRepository(_context, _settingsRepositoryLoggerMock.Object);
     }
 
     [Fact]
